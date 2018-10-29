@@ -1,15 +1,16 @@
 'use strict'
 
-import React from 'react'
+import React, { PropTypes }  from 'react'
 
 import Search from './search'
 import UserInfo from './userInfo'
 import Actions from './actions'
 import Repos from './repos'
 
-const AppContent = ({userinfo, repos, starred, handleSearch, getRepos, getStarred}) => (
+const AppContent = ({userinfo, repos, starred, handleSearch, getRepos, getStarred, isFetching}) => (
     <div className='app'>
-        <Search handleSearch={handleSearch}/>  
+        <Search isDisabled={isFetching} handleSearch={handleSearch}/>  
+        {isFetching && <div>Carregando...</div>}
         <div className='teste'>
           <section className='git__user'>
             {!!userinfo && <UserInfo userinfo={userinfo}/>}
@@ -36,9 +37,13 @@ const AppContent = ({userinfo, repos, starred, handleSearch, getRepos, getStarre
 )
 
 AppContent.PropTypes = {
-  userinfo: React.PropTypes.object,
-  repos: React.PropTypes.array.isRequired,
-  starred: React.PropTypes.array.isRequired
+  userinfo: PropTypes.object,
+  repos: PropTypes.array.isRequired,
+  starred: PropTypes.array.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  getRepos: PropTypes.func.isRequired,
+  getStarred: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
 }
 
 export default AppContent

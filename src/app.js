@@ -12,8 +12,15 @@ class App extends Component {
     this.state = {
       userinfo: null,
       repos: [],
-      starred: []
+      starred: [],
+      isFetching:  false
     }
+  }
+
+  getGitHubApiUrl(username, type) {
+    const internalUser = username ? `/${username}` : ''
+    const internalType = type ? `/${type}` : ''
+    return `https://api.github.com/users${internalUser}${internalType}`
   }
 
   handleSearch (e) {
@@ -22,9 +29,9 @@ class App extends Component {
       const ENTER = 13;
 
       if(keyCode == ENTER) {
-        ajax().get(`https://api.github.com/users/${value}`)
+        this.setState({isFetching: true})
+        ajax().get(this.getGitHubApiUrl(value))
           .then((result) => {
-            console.log(result)
             this.setState({
               userinfo: {
                 username: result.name,
@@ -33,8 +40,12 @@ class App extends Component {
                 repos: result.public_repos,
                 followers: result.followers,
                 following: result.following
-              }
+              },
+              repos: [],
+              starred: []
             })
+        })
+        .always(() => {this.setState({isFetching: false})
         })
     }
   }
@@ -42,7 +53,9 @@ class App extends Component {
   
   getRepos(type) {
     return (e) => {
-      ajax().get(`https://api.github.com/users/${this.state.userinfo.login}/${type}`)
+      
+      const name = this.state.userinfo.login;
+      ajax().get(this.getGitHubApiUrl(name, type))
         .then((result) => {
           this.setState({
             [type]: result.map((repo) => ({
@@ -60,6 +73,7 @@ class App extends Component {
       userinfo={this.state.userinfo}
       repos={this.state.repos}
       starred={this.state.starred}
+      isFetching={this.state.isFetching}
       handleSearch={(e) => this.handleSearch(e)}
       getRepos={this.getRepos('repos')}
       getStarred={this.getRepos('starred')}

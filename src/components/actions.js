@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 const Actions = ({ getRepos, getStarred }) => (
     <div className='git__actions'>
@@ -7,5 +7,10 @@ const Actions = ({ getRepos, getStarred }) => (
     </div>
 
 )
+
+Actions.PropTypes = {
+    getRepos: PropTypes.func.isRequired,
+    getStarred: PropTypes.func.isRequired
+}
 
 export default Actions
