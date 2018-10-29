@@ -7,13 +7,13 @@ import UserInfo from './userInfo'
 import Actions from './actions'
 import Repos from './repos'
 
-const AppContent = ({userinfo, repos, starred}) => (
+const AppContent = ({userinfo, repos, starred, handleSearch, getRepos, getStarred}) => (
     <div className='app'>
-        <Search />  
+        <Search handleSearch={handleSearch}/>  
         <div className='teste'>
           <section className='git__user'>
             {!!userinfo && <UserInfo userinfo={userinfo}/>}
-              {!!userinfo && <Actions />}
+              {!!userinfo && <Actions getRepos={getRepos} getStarred={getStarred}/>}
               
               {!!repos.length && 
                 <Repos
@@ -22,12 +22,13 @@ const AppContent = ({userinfo, repos, starred}) => (
                   repos={repos}
                   />
                 }
-            {!!starred.length && 
-              <Repos
-                className='git__starred'
-                title='Favoritos:'
-                repos={starred}
-              />
+
+              {!!starred.length && 
+                <Repos
+                  className='git__starred'
+                  title='Favoritos:'
+                  repos={starred}
+                />
             }
           </section>
       </div>
@@ -35,9 +36,9 @@ const AppContent = ({userinfo, repos, starred}) => (
 )
 
 AppContent.PropTypes = {
-  userinfo: React.PropTypes.object.isrequired,
-  repos: React.PropTypes.array.isrequired,
-  starred: React.PropTypes.array.isrequired
+  userinfo: React.PropTypes.object,
+  repos: React.PropTypes.array.isRequired,
+  starred: React.PropTypes.array.isRequired
 }
 
 export default AppContent

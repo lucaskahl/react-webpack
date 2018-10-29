@@ -12,12 +12,20 @@ ul {
     margin-bottom: 400px;
 }
 
+.git__search {
+    display: block;
+    width: 488px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .git__search-input{
     padding: 5px 160px;
     text-align: center;
     left: 10vh;
     border: 1px solid black;
-    margin: 20px 20px 20px 20px;
+    
 }
 
 .git__user {

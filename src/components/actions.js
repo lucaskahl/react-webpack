@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Actions = () => (
+const Actions = ({ getRepos, getStarred }) => (
     <div className='git__actions'>
-        <button>Ver repositórios</button>
-        <button>ver favoritos</button>
+        <button onClick={getRepos}>Ver repositórios</button>
+        <button onClick={getStarred}>ver favoritos</button>
     </div>
 
 )

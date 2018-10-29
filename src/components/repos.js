@@ -17,7 +17,7 @@ Repos.defaultProps= {
 
 Repos.propTypes = {
     className: React.PropTypes.string,
-    title: React.PropTypes.string.isrequired,
+    title: React.PropTypes.string.isRequired,
     repos: React.PropTypes.array
 }
 
